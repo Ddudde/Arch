@@ -1,0 +1,21 @@
+package prakt2;
+
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
+import java.rmi.server.UnicastRemoteObject;
+
+public class Server extends HelloImpl{
+    public Server() {}
+
+    public static void main(String[] args) {
+        try{
+            HelloImpl obj = new HelloImpl();
+            Hello stub = (Hello) UnicastRemoteObject.exportObject(obj, 0);
+            Registry registry = LocateRegistry.getRegistry();
+            registry.bind("Hello", stub);
+            System.err.println("Server ready");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
